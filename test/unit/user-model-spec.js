@@ -5,7 +5,7 @@ var data = require('../../models/user.js');
 var User = require('../../modules/user');
 var testUser = {}
 var date = new Date();
-beforeEach(function *() {
+beforeEach(function* () {
   var options = {
       id:        1,
       email:    'test@email.com',
@@ -33,10 +33,19 @@ describe('users.find(:id)', function () {
 });
 
 describe('users.delete(:id)', function () {
-  it('finds the user with a certian id',function* () {
+  it('deletes the user with a certian id',function* () {
     yield data.users.delete(1);
     var users = yield data.users.all();
     users.length.should.equal(0);
+  });
+});
+
+describe('users.update(:id, :params)', function () {
+  it('updates the user with a certian id',function* () {
+    var params = { email: 'test2@email.com' }
+    yield data.users.update(1, params);
+    var updatedUser = yield data.users.find(1);
+    updatedUser.email.should.equal(params.email);
   });
 });
 
