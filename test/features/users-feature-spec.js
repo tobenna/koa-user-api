@@ -7,7 +7,7 @@ var data = require('../../models/user.js');
 var User = require('../../modules/user');
 var userFile = './data/users.json';
 
-describe('GET users/:id ', function(){
+describe('GET /users/:id ', function(){
   var date = new Date();
   var userParams = {
       id:        1,
@@ -23,12 +23,12 @@ describe('GET users/:id ', function(){
     yield data.users.create(testUser);
   });
 
-  afterEach(function *() {
+  afterEach(function* () {
     yield fs.writeFile('./data/users.json', '[]')
   });
 
   it('returns JSON for an existing user', function* () {
-    var res = yield request.get('/users/' + testUser.id)
+    yield request.get('/users/' + testUser.id)
     .expect(200)
     .expect('Content-Type', /json/)
     .expect(new RegExp(userParams.forename))
@@ -40,20 +40,27 @@ describe('GET users/:id ', function(){
     var res = yield request.get('/users/' + 5).expect(404).end();
     res.status.should.equal(404);
   });
-	// it('returns JSON for existing user', function (done) {
-	// 	co(function *() {
-	// 		// Insert test user in database
-	// 		var user = yield users.insert(test_user);
-	// 		var userUrl = '/' + user._id;
-  //
-	// 		// Get
-	// 		request
-	// 			.get(userUrl)
-	//       		.set('Accept', 'application/json')
-	//       		.expect('Content-Type', /json/)
-	//       		.expect(/Marcus/)
-	//       		.expect(/Bandung, Indonesia/)
-	//       		.expect(200, done);
-	//     });
-	// });
+});
+
+describe('POST /users/ ', function(){
+  var userParams = {
+      email:    'test@email.com',
+      forename: 'Tobenna',
+      surname:  'Ndu'
+  }
+
+  beforeEach(function* () {
+    yield fs.writeFile('./data/users.json', '[]');
+  });
+
+  afterEach(function* () {
+    yield fs.writeFile('./data/users.json', '[]')
+  });
+
+  it('returns JSON for an existing user', function* () {
+    var res = yield request.post('/users/').send(userParams)
+    .expect(201).end();
+    var userGotten = yield request.get('/users/1').expect(200).end();
+    userGotten.body.forename.should.equal(userParams.forename);
+  });
 });
