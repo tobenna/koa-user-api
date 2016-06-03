@@ -22,6 +22,7 @@ module.exports = {
       return user;
     },
     new: function* (params) {
+      return new User(params);
     },
     create: function* (user) {
       var data = yield this.all();
@@ -51,6 +52,7 @@ module.exports = {
       yield this.save(userToUpdate);
     },
     save: function* (user) {
+      if (user.errors.length > 0) return false;
       var data = yield this.all();
       var userToSave = {}
       for (var prop in userSchema) {
