@@ -20,8 +20,6 @@
   "dependencies": {
     "co-fs": "^1.2.0",
     "koa": "^1.2.0",
-    "koa-router": "^5.4.0",
-    "mongodb": "^2.1.21",
-    "mongoose": "^4.4.19"
+    "koa-router": "^5.4.0"
   }
 }
