@@ -6,9 +6,9 @@ module.exports = {
       var data = yield fs.readFile(userFile, 'utf-8');
       return JSON.parse(data);
     },
-    find: function *(id) {
-
-    },
+    // find: function *(id) {
+    //
+    // },
     create: function *(user) {
       var users = yield this.all();
 

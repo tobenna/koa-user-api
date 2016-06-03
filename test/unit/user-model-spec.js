@@ -1,7 +1,6 @@
 require('co-mocha');
 var should = require('should');
 var fs = require('co-fs');
-
 var data = require('../../models/user.js');
 
 
@@ -10,7 +9,7 @@ before(function *() {
 });
 
 describe('user data', function () {
-  it('should have a new user',function* () {
+  it('shows the list of users',function* () {
     var users = yield data.users.all();
     yield data.users.create({ name: 'John' });
     var newUsers = yield data.users.all();
