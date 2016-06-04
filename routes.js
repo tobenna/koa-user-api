@@ -12,6 +12,11 @@ router.get('/users/:id', function* () {
   }
 });
 
+router.get('/users/', function* () {
+  var users = yield data.users.all();
+  this.body = users;
+});
+
 router.post('/users/', function* () {
   var params = yield parse(this);
   params.id = 1;

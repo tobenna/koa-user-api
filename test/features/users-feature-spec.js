@@ -10,7 +10,6 @@ var userFile = './data/users.json';
 describe('GET /users/:id ', function(){
   var date = new Date();
   var userParams = {
-      id:        1,
       email:    'test@email.com',
       forename: 'Tobenna',
       surname:  'Ndu',
@@ -27,7 +26,7 @@ describe('GET /users/:id ', function(){
   });
 
   it('returns JSON for an existing user', function* () {
-    yield request.get('/users/' + userParams.id)
+    yield request.get('/users/' + 1)
     .expect(200)
     .expect('Content-Type', /json/)
     .expect(new RegExp(userParams.forename))
@@ -38,6 +37,38 @@ describe('GET /users/:id ', function(){
   it('returns 404 not found if user doesn\'t exsit', function* () {
     var res = yield request.get('/users/' + 5).expect(404).end();
     res.status.should.equal(404);
+  });
+});
+
+describe('GET /users/ ', function(){
+  var date = new Date();
+  var userParams = {
+      email:    'test@email.com',
+      forename: 'Tobenna',
+      surname:  'Ndu',
+      created: date.toString()
+  }
+
+  beforeEach(function* () {
+    yield fs.writeFile('./data/users.json', '[]');
+    yield data.users.create(userParams);
+    yield data.users.create(userParams);
+    yield data.users.create(userParams);
+  });
+
+  afterEach(function* () {
+    yield fs.writeFile('./data/users.json', '[]')
+  });
+
+  it('returns JSON for an existing user', function* () {
+    var allUsers = yield request.get('/users/')
+    .expect(200)
+    .expect('Content-Type', /json/)
+    .expect(new RegExp(userParams.forename))
+	  .expect(new RegExp(userParams.surname))
+    .expect(new RegExp(userParams.email))
+    .end();
+    allUsers.body.length.should.equal(3);
   });
 });
 
@@ -76,7 +107,6 @@ describe('PUT /users/:id ', function(){
   var date = new Date();
 
   var userParams = {
-      id:        1,
       email:    'test@email.com',
       forename: 'Tobenna',
       surname:  'Ndu',
@@ -104,7 +134,7 @@ describe('PUT /users/:id ', function(){
     var updateParams = { badParam: "tes2t@email.com" };
     var res = yield request.put('/users/' + 1).send(updateParams)
     .expect(422).end();
-    var userGotten = yield request.get('/users/'+1).expect(200).end();
+    var userGotten = yield request.get('/users/'+ 1 ).expect(200).end();
     userGotten.body.email.should.equal(userParams.email);
   });
 
@@ -115,7 +145,6 @@ describe('DELETE /users/:id ', function(){
   var date = new Date();
 
   var userParams = {
-      id:        1,
       email:    'test@email.com',
       forename: 'Tobenna',
       surname:  'Ndu',
@@ -132,9 +161,9 @@ describe('DELETE /users/:id ', function(){
   });
 
   it('returns success after deleting', function* () {
-    var res = yield request.delete('/users/' + userParams.id)
+    var res = yield request.delete('/users/' + 1)
     .expect(200).end();
-    var userGotten = yield request.get('/users/'+ userParams.id)
+    var userGotten = yield request.get('/users/'+ 1)
     .expect(404).end();
   });
 

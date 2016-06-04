@@ -49,19 +49,17 @@ describe('users.find(:id)', function () {
     var foundUser = yield data.users.findOne(1);
     foundUser.should.match(testUser);
   });
+
+  it('returns undefined if cannot find user',function* () {
+    var foundUser = yield data.users.findOne(5);
+    (typeof foundUser).should.match('undefined');
+  });
 });
 
 describe('users.all', function () {
   it('shows the list of users',function* () {
     var users = yield data.users.all();
     users.should.match([testUser]);
-  });
-});
-
-describe('users.find(:id)', function () {
-  it('finds the user with a certian id',function* () {
-    var foundUser = yield data.users.findOne(1);
-    foundUser.should.match(testUser);
   });
 });
 

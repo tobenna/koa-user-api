@@ -9,7 +9,6 @@ var User = function () {
 }
 
 User.prototype._fill = function (info) {
-  // console.log(info);
   for (var prop in info) {
     if (this.hasOwnProperty(prop)) {
       this[prop] = info[prop];

@@ -26,6 +26,12 @@ module.exports = {
     },
     create: function* (params) {
       var data = yield this.all();
+      var lastUser = data[data.length -1 ];
+      if (typeof lastUser === 'undefined'){
+        params.id = 1;
+      }else{
+        params.id = lastUser.id + 1;
+      }
       var createdUser = yield this.new(params);
       var savedUser = yield this.save(createdUser);
       data.push(savedUser);
