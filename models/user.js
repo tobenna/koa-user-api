@@ -75,7 +75,6 @@ module.exports = {
       }else{
         userToSave.id = lastUser.id + 1;
       }
-      delete userToSave.errors;
       data.push(userToSave);
       yield fs.writeFile(userFile, JSON.stringify([]));
       yield fs.writeFile(userFile, JSON.stringify(data));
