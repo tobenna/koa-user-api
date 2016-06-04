@@ -90,7 +90,7 @@ describe('POST /users/ ', function(){
   it('returns location of created user', function* () {
     var res = yield request.post('/users/').send(userParams)
     .expect(201).end();
-    var userGotten = yield request.get('/users/1').expect(200).end();
+    var userGotten = yield request.get('/users/' + res.body.id).expect(200).end();
     userGotten.body.forename.should.equal(userParams.forename);
   });
 

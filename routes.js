@@ -19,7 +19,6 @@ router.get('/users/', function* () {
 
 router.post('/users/', function* () {
   var params = yield parse(this);
-  params.id = 1;
   params.created = new Date();
   var user = yield data.users.new(params);
   var savedUser = yield data.users.save(user);

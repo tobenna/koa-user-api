@@ -9,13 +9,16 @@ module.exports = {
       return file;
     },
     all: function* () {
+      return JSON.parse(yield this.data);
+    },
+    _all: function* () {
       var returnedUsers = JSON.parse(yield this.data);
       return returnedUsers.map(function (user) {
         return new User(user);
       });
     },
     findOne: function* (_id) {
-      var data = yield this.all();
+      var data = yield this._all();
       var user = data.find(function (user) {
         return user.id === _id;
       });
@@ -25,13 +28,7 @@ module.exports = {
       return new User(params);
     },
     create: function* (params) {
-      var data = yield this.all();
-      var lastUser = data[data.length -1 ];
-      if (typeof lastUser === 'undefined'){
-        params.id = 1;
-      }else{
-        params.id = lastUser.id + 1;
-      }
+      var data = yield this._all();
       var createdUser = yield this.new(params);
       var savedUser = yield this.save(createdUser);
       data.push(savedUser);
@@ -39,7 +36,7 @@ module.exports = {
       return savedUser;
     },
     delete: function* (_id) {
-      var data = yield this.all();
+      var data = yield this._all();
       var index = data.findIndex(function (user) {
         return user.id === _id;
       });
@@ -55,7 +52,7 @@ module.exports = {
     },
     update: function* (userId, _params) {
       var userToUpdate = {}
-      var data = yield this.all();
+      var data = yield this._all();
       var validatedParams = yield this.new(_params);
       if (validatedParams.errors.length > 0) return false;
       userToUpdate = yield this.findOne(userId);
@@ -69,9 +66,16 @@ module.exports = {
       if (user.errors.length > 0) return false;
       var data = yield this.all();
       var userToSave = {};
+      var lastUser = data[data.length -1 ];
       for (var prop in userSchema) {
         userToSave[prop] = user[prop];
       }
+      if (typeof lastUser === 'undefined'){
+        userToSave.id = 1;
+      }else{
+        userToSave.id = lastUser.id + 1;
+      }
+      delete userToSave.errors;
       data.push(userToSave);
       yield fs.writeFile(userFile, JSON.stringify([]));
       yield fs.writeFile(userFile, JSON.stringify(data));
