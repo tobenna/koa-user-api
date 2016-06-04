@@ -14,9 +14,8 @@ var userParams = {
 }
 
 beforeEach(function* () {
-  testUser = new User(userParams);
   yield fs.writeFile('./data/users.json', '[]');
-  yield data.users.create(testUser);
+  yield data.users.create(userParams);
 });
 
 describe('users.create()', function () {
@@ -27,13 +26,21 @@ describe('users.create()', function () {
     newUsers.length.should.match(users.length + 1);
   });
 
+  it('Does not save with invalid parameters',function* () {
+    var users = yield data.users.all();
+    var badParamsUser = yield data.users.new({ badParams: 'Bad param' });
+    var badUser = yield data.users.save(badParamsUser);
+    var newUsers = yield data.users.all();
+    newUsers.length.should.match(users.length);
+  });
+
   it('Does not create with invalid email',function* () {
     var badUser = { id: 2, email: 'notandemail' };
     var users = yield data.users.all();
     var userToSave = yield data.users.new(badUser);
     yield data.users.save(userToSave);
     var newUsers = yield data.users.all();
-    newUsers.length.should.match(users.length);
+    newUsers.should.match(users);
   });
 });
 

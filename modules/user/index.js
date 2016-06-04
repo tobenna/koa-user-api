@@ -14,6 +14,9 @@ User.prototype._fill = function (info) {
       this[prop] = info[prop];
       this._validate(prop, info[prop]);
     }
+    else {
+      return null;
+    }
   }
   return this;
 };

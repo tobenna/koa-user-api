@@ -18,9 +18,8 @@ describe('GET /users/:id ', function(){
   }
 
   beforeEach(function* () {
-    testUser = new User(userParams);
     yield fs.writeFile('./data/users.json', '[]');
-    yield data.users.create(testUser);
+    yield data.users.create(userParams);
   });
 
   afterEach(function* () {
@@ -28,7 +27,7 @@ describe('GET /users/:id ', function(){
   });
 
   it('returns JSON for an existing user', function* () {
-    yield request.get('/users/' + testUser.id)
+    yield request.get('/users/' + userParams.id)
     .expect(200)
     .expect('Content-Type', /json/)
     .expect(new RegExp(userParams.forename))
@@ -85,9 +84,8 @@ describe('PUT /users/:id ', function(){
   }
 
   beforeEach(function* () {
-    testUser = new User(userParams);
     yield fs.writeFile('./data/users.json', '[]');
-    yield data.users.create(testUser);
+    yield data.users.create(userParams);
   });
 
   afterEach(function* () {

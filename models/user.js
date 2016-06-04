@@ -24,11 +24,13 @@ module.exports = {
     new: function* (params) {
       return new User(params);
     },
-    create: function* (user) {
+    create: function* (params) {
       var data = yield this.all();
-      data.push(user);
+      var createdUser = yield this.new(params);
+      var savedUser = yield this.save(createdUser);
+      data.push(savedUser);
       yield fs.writeFile(userFile, JSON.stringify(data));
-      return user;
+      return savedUser;
     },
     delete: function* (_id) {
       var data = yield this.all();
@@ -53,9 +55,10 @@ module.exports = {
       var updatedUser = yield this.save(userToUpdate);
     },
     save: function* (user) {
+      if (Object.keys(user).length === 0) return false;
       if (user.errors.length > 0) return false;
       var data = yield this.all();
-      var userToSave = {}
+      var userToSave = {};
       for (var prop in userSchema) {
         if (userSchema.hasOwnProperty(prop)) {
           userToSave[prop] = user[prop];
