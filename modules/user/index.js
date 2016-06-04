@@ -22,7 +22,9 @@ User.prototype._fill = function (info) {
 };
 
 User.prototype._validations = {
-    id: function () { return true },
+    id: function (id) {
+       return Number.isInteger(id);
+    },
     forename: function () { return true },
     surname: function () { return true },
     created: function () { return true },

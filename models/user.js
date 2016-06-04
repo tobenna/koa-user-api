@@ -36,7 +36,7 @@ module.exports = {
       return savedUser;
     },
     delete: function* (_id) {
-      var data = yield this._all();
+      var data = yield this.all();
       var index = data.findIndex(function (user) {
         return user.id === _id;
       });

@@ -2,10 +2,9 @@
   "name": "using_me",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "istanbul cover _mocha -- -R spec",
-    "start": "node server.js"
+    "test": "istanbul cover _mocha -- -R spec"
   },
   "keywords": [],
   "author": "",
