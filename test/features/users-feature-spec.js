@@ -66,7 +66,7 @@ describe('POST /users/ ', function(){
   it('returns validation errors validation fails', function* () {
     userParams.email = 'notanemail';
     var res = yield request.post('/users/').send(userParams)
-    .expect(409).end();
+    .expect(422).end();
     res.body.errors.length.should.equal(1);
     res.body.errors[0].should.match('Validation error on email property');
   });
@@ -92,7 +92,7 @@ describe('PUT /users/:id ', function(){
     yield fs.writeFile('./data/users.json', '[]')
   });
 
-  it('returns location of created user', function* () {
+  it('it returns no content to show success', function* () {
     var updateParams = { email: "tes2t@email.com" };
     var res = yield request.put('/users/' + 1).send(updateParams)
     .expect(204).end();
@@ -100,4 +100,46 @@ describe('PUT /users/:id ', function(){
     userGotten.body.email.should.equal(updateParams.email);
   });
 
+  it('it does not update when bad params', function* () {
+    var updateParams = { badParam: "tes2t@email.com" };
+    var res = yield request.put('/users/' + 1).send(updateParams)
+    .expect(422).end();
+    var userGotten = yield request.get('/users/'+1).expect(200).end();
+    userGotten.body.email.should.equal(userParams.email);
+  });
+
+});
+
+
+describe('DELETE /users/:id ', function(){
+  var date = new Date();
+
+  var userParams = {
+      id:        1,
+      email:    'test@email.com',
+      forename: 'Tobenna',
+      surname:  'Ndu',
+      created: date.toString()
+  }
+
+  beforeEach(function* () {
+    yield fs.writeFile('./data/users.json', '[]');
+    yield data.users.create(userParams);
+  });
+
+  afterEach(function* () {
+    yield fs.writeFile('./data/users.json', '[]')
+  });
+
+  it('returns success after deleting', function* () {
+    var res = yield request.delete('/users/' + userParams.id)
+    .expect(200).end();
+    var userGotten = yield request.get('/users/'+ userParams.id)
+    .expect(404).end();
+  });
+
+  it('does not delete if doesnt find user', function* () {
+    var res = yield request.delete('/users/' + 'notAnID')
+    .expect(404).end();
+  });
 });

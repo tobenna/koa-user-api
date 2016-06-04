@@ -9,13 +9,14 @@ var User = function () {
 }
 
 User.prototype._fill = function (info) {
+  // console.log(info);
   for (var prop in info) {
     if (this.hasOwnProperty(prop)) {
       this[prop] = info[prop];
       this._validate(prop, info[prop]);
     }
     else {
-      return null;
+      this.errors.push('Invalid parameters')
     }
   }
   return this;

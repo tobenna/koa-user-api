@@ -23,7 +23,7 @@ router.post('/users/', function* () {
     this.body = { id: savedUser.id }
   }
   else {
-    this.status = 409;
+    this.status = 422;
     var response = { errors: [] }
     user.errors.forEach(function (err) {
       response.errors.push(err);
@@ -36,7 +36,23 @@ router.put('/users/:id', function* () {
   var updateInfo = yield parse(this);
   var id = parseInt(this.params.id);
   var updatedUser = yield data.users.update(id, updateInfo);
-  this.status = 204;
+  if (updatedUser){
+    this.status = 204;
+  }
+  else{
+    this.status = 422;
+  }
+
 });
+
+router.delete('/users/:id', function* () {
+  var id = parseInt(this.params.id);
+  if(yield data.users.delete(id)){
+    this.status = 200;
+  }else {
+    this.status = 404;
+  }
+});
+
 
 module.exports = router.routes();

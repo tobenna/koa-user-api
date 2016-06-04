@@ -40,29 +40,31 @@ module.exports = {
       if (index > -1) {
         data.splice(index, 1);
         yield fs.writeFile(userFile, JSON.stringify(data));
+        return true;
+      }
+      else {
+        yield fs.writeFile(userFile, JSON.stringify(data));
+        return false;
       }
     },
     update: function* (userId, _params) {
       var userToUpdate = {}
       var data = yield this.all();
+      var validatedParams = yield this.new(_params);
+      if (validatedParams.errors.length > 0) return false;
       userToUpdate = yield this.findOne(userId);
       for (var prop in _params) {
-        if (userToUpdate.hasOwnProperty(prop)) {
-          userToUpdate[prop] = _params[prop];
-        }
+        userToUpdate[prop] = _params[prop];
       }
       yield this.delete(userId);
-      var updatedUser = yield this.save(userToUpdate);
+      return yield this.save(userToUpdate);
     },
     save: function* (user) {
-      if (Object.keys(user).length === 0) return false;
       if (user.errors.length > 0) return false;
       var data = yield this.all();
       var userToSave = {};
       for (var prop in userSchema) {
-        if (userSchema.hasOwnProperty(prop)) {
-          userToSave[prop] = user[prop];
-        }
+        userToSave[prop] = user[prop];
       }
       data.push(userToSave);
       yield fs.writeFile(userFile, JSON.stringify([]));

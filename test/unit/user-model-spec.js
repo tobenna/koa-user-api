@@ -71,6 +71,12 @@ describe('users.delete(:id)', function () {
     var users = yield data.users.all();
     users.length.should.equal(0);
   });
+
+  it('does not delete if not found',function* () {
+    yield data.users.delete("Not my id");
+    var users = yield data.users.all();
+    users.length.should.equal(1);
+  });
 });
 
 describe('users.update(:id, :params)', function () {
