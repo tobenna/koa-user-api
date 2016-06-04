@@ -57,10 +57,49 @@ describe('POST /users/ ', function(){
     yield fs.writeFile('./data/users.json', '[]')
   });
 
-  it('returns JSON for an existing user', function* () {
+  it('returns location of created user', function* () {
     var res = yield request.post('/users/').send(userParams)
     .expect(201).end();
     var userGotten = yield request.get('/users/1').expect(200).end();
     userGotten.body.forename.should.equal(userParams.forename);
   });
+
+  it('returns validation errors validation fails', function* () {
+    userParams.email = 'notanemail';
+    var res = yield request.post('/users/').send(userParams)
+    .expect(409).end();
+    res.body.errors.length.should.equal(1);
+    res.body.errors[0].should.match('Validation error on email property');
+  });
+});
+
+describe('PUT /users/:id ', function(){
+  var date = new Date();
+
+  var userParams = {
+      id:        1,
+      email:    'test@email.com',
+      forename: 'Tobenna',
+      surname:  'Ndu',
+      created: date.toString()
+  }
+
+  beforeEach(function* () {
+    testUser = new User(userParams);
+    yield fs.writeFile('./data/users.json', '[]');
+    yield data.users.create(testUser);
+  });
+
+  afterEach(function* () {
+    yield fs.writeFile('./data/users.json', '[]')
+  });
+
+  it('returns location of created user', function* () {
+    var updateParams = { email: "tes2t@email.com" };
+    var res = yield request.put('/users/' + 1).send(updateParams)
+    .expect(204).end();
+    var userGotten = yield request.get('/users/'+1).expect(200).end();
+    userGotten.body.email.should.equal(updateParams.email);
+  });
+
 });

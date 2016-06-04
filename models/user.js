@@ -14,7 +14,7 @@ module.exports = {
         return new User(user);
       });
     },
-    find: function* (_id) {
+    findOne: function* (_id) {
       var data = yield this.all();
       var user = data.find(function (user) {
         return user.id === _id;
@@ -30,7 +30,7 @@ module.exports = {
       yield fs.writeFile(userFile, JSON.stringify(data));
       return user;
     },
-    delete: function *(_id) {
+    delete: function* (_id) {
       var data = yield this.all();
       var index = data.findIndex(function (user) {
         return user.id === _id;
@@ -40,16 +40,17 @@ module.exports = {
         yield fs.writeFile(userFile, JSON.stringify(data));
       }
     },
-    update: function* (_id, _params) {
+    update: function* (userId, _params) {
+      var userToUpdate = {}
       var data = yield this.all();
-      var userToUpdate = yield this.find(_id);
+      userToUpdate = yield this.findOne(userId);
       for (var prop in _params) {
-        if (_params.hasOwnProperty(prop)) {
+        if (userToUpdate.hasOwnProperty(prop)) {
           userToUpdate[prop] = _params[prop];
         }
       }
-      yield this.delete(_id);
-      yield this.save(userToUpdate);
+      yield this.delete(userId);
+      var updatedUser = yield this.save(userToUpdate);
     },
     save: function* (user) {
       if (user.errors.length > 0) return false;
@@ -61,8 +62,9 @@ module.exports = {
         }
       }
       data.push(userToSave);
+      yield fs.writeFile(userFile, JSON.stringify([]));
       yield fs.writeFile(userFile, JSON.stringify(data));
-      return user;
+      return userToSave;
     }
   }
 }

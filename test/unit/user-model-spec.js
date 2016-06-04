@@ -39,7 +39,7 @@ describe('users.create()', function () {
 
 describe('users.find(:id)', function () {
   it('finds the user with a certian id',function* () {
-    var foundUser = yield data.users.find(1);
+    var foundUser = yield data.users.findOne(1);
     foundUser.should.match(testUser);
   });
 });
@@ -53,7 +53,7 @@ describe('users.all', function () {
 
 describe('users.find(:id)', function () {
   it('finds the user with a certian id',function* () {
-    var foundUser = yield data.users.find(1);
+    var foundUser = yield data.users.findOne(1);
     foundUser.should.match(testUser);
   });
 });
@@ -70,7 +70,7 @@ describe('users.update(:id, :params)', function () {
   it('updates the user with a certian id',function* () {
     var params = { email: 'test2@email.com' }
     yield data.users.update(1, params);
-    var updatedUser = yield data.users.find(1);
+    var updatedUser = yield data.users.findOne(1);
     updatedUser.email.should.equal(params.email);
   });
 });
