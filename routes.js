@@ -1,17 +1,18 @@
 var router = require('koa-router')();
 var controller = require('./controllers/users-controller');
+var API_URL = '/api/v1';
 
-router.get('/users/:id', controller.show);
+router.get(API_URL + '/users/:id', controller.show);
 
-router.get('/users/', controller.index);
+router.get(API_URL + '/users/', controller.index);
 
-router.post('/users/', controller.create);
+router.post(API_URL + '/users/', controller.create);
 
-router.put('/users/:id', controller.update);
+router.put(API_URL + '/users/:id', controller.update);
 
-router.get('/users/search', controller.search);
+router.get(API_URL + '/users/search', controller.search);
 
-router.delete('/users/:id', controller.delete);
+router.delete(API_URL + '/users/:id', controller.delete);
 
 
 module.exports = router.routes();

@@ -43,7 +43,7 @@ module.exports = {
   },
 
   search: function* () {
-    var users = yield User.search(this.query.name);
+    var users = yield User.search(this.query.q);
     this.status = 200;
     this.body = users;
   },
