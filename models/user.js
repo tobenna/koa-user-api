@@ -69,7 +69,6 @@ module.exports = {
     return users.filter(function (user) {
       return self.new(user).isLike(term);
     });
-    return matchingUsers;
   },
   _setId: function* (userToSave, data) {
     var lastUser = data[data.length -1 ];
