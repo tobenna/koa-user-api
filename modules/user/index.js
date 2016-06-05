@@ -28,7 +28,6 @@ User.prototype._validations = {
     forename: function () { return true },
     surname: function () { return true },
     created: function () { return true },
-    errors: function () { return true },
     email: function (email) {
       var re = /\S+@\S+\.\S+/;
       return re.test(email);

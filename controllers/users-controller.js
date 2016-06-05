@@ -1,10 +1,13 @@
-var data = require('../models/user');
+var User = require('../models/user');
 var parse = require('co-body');
 
+var _user_id = function (request) {
+  return parseInt(request.params.id);
+}
 module.exports = {
   show: function* () {
-    var id = parseInt(this.params.id);
-    var user = yield data.users.findOne(id);
+    var id = _user_id(this);
+    var user = yield User.findOne(id);
     if (typeof user === 'undefined') {
       this.code = '404';
     }else{
@@ -12,32 +15,26 @@ module.exports = {
     }
   },
   index: function* () {
-    var users = yield data.users.all();
+    var users = yield User.all();
     this.body = users;
   },
   create: function* () {
     var params = yield parse(this);
     params.created = new Date();
-    var user = yield data.users.new(params);
-    var savedUser = yield data.users.save(user);
-    if (savedUser) {
+    var savedUser = yield User.create(params);
+    if (typeof savedUser.errors === 'undefined') {
       this.status= 201;
       this.body = { id: savedUser.id }
     }
     else {
       this.status = 422;
-      var response = { errors: [] }
-      user.errors.forEach(function (err) {
-        response.errors.push(err);
-      });
-      this.body = response;
+      this.body = { errors: savedUser.errors };
     }
   },
   update: function* () {
-    var updateInfo = yield parse(this);
-    var id = parseInt(this.params.id);
-    var updatedUser = yield data.users.update(id, updateInfo);
-    if (updatedUser){
+    var info = yield parse(this);
+    var updatedUser = yield User.update(_user_id(this), info);
+    if (Number.isInteger(updatedUser.id)){
       this.status = 204;
     }
     else {
@@ -45,12 +42,11 @@ module.exports = {
     }
   },
   delete: function* () {
-    var id = parseInt(this.params.id);
-    if(yield data.users.delete(id)){
+    if (yield User.delete(_user_id(this))){
       this.status = 200;
     }
-    else {
-      this.status = 404;
-    }
+    // else {
+    //   this.status = 404;
+    // }
   }
 }
