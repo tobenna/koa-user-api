@@ -21,6 +21,15 @@ User.prototype._fill = function (info) {
   return this;
 };
 
+
+User.prototype.isLike = function (term) {
+  _matches = function (name, term) {
+    return (name.toLowerCase().search(term.toLowerCase())) > - 1;
+  }
+  return _matches(this.forename, term) || _matches(this.surname, term);
+
+};
+
 User.prototype.MESSAGES = {
     invalidParams: function () {
       return 'Invalid parameters';

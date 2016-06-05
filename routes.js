@@ -9,6 +9,8 @@ router.post('/users/', controller.create);
 
 router.put('/users/:id', controller.update);
 
+router.get('/users/search', controller.search);
+
 router.delete('/users/:id', controller.delete);
 
 

@@ -63,6 +63,14 @@ module.exports = {
     yield fs.writeFile(userFile, JSON.stringify(data));
     return userToSave;
   },
+  search: function* (term) {
+    var self = this;
+    var users = yield this.all();
+    return users.filter(function (user) {
+      return self.new(user).isLike(term);
+    });
+    return matchingUsers;
+  },
   _setId: function* (userToSave, data) {
     var lastUser = data[data.length -1 ];
     if (typeof lastUser === 'undefined'){

@@ -102,6 +102,24 @@ describe('users.update(:id, :params)', function () {
   });
 });
 
+describe('users.search(:term)', function () {
+  it('finds users matching a search term in the forename',function* () {
+    yield User.create(userParams);
+    var users = yield User.search("tob");
+    users.length.should.equal(2);
+  });
+
+  it('finds users matching a search term in the surname',function* () {
+    var users = yield User.search("ndu");
+    users.length.should.equal(1);
+  });
+
+  it('returns nothing when does not match',function* () {
+    var users = yield User.search("top");
+    users.length.should.equal(0);
+  });
+});
+
 
 afterEach(function *() {
   yield fs.writeFile('./data/users.json', '[]')

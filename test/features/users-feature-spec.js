@@ -123,4 +123,27 @@ describe('API', function () {
     });
   });
 
+  describe('GET /users/search?name=:term ', function(){
+
+    it('returns a list of users matching term', function* () {
+      var usersGotten = yield request.get('/users/search?name=' + 'tob')
+      .expect(200).end();
+      usersGotten.body.length.should.equal(1);
+    });
+
+    it('returns an empty list if does not match', function* () {
+      var usersGotten = yield request.get('/users/search?name=' + 'notAnID')
+      .expect(200).end();
+      usersGotten.body.length.should.equal(0);
+    });
+
+    it('does not delete if doesnt find user', function* () {
+      var allUsers = yield request.get('/users/').expect(200).end();
+      var res = yield request.delete('/users/' + 5)
+      .expect(404).end();
+      var newUsers = yield request.get('/users/').expect(200).end();
+      allUsers.body.length.should.equal(newUsers.body.length)
+    });
+  });
+
 });

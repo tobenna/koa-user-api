@@ -41,12 +41,16 @@ module.exports = {
       this.status = 422;
     }
   },
+
+  search: function* () {
+    var users = yield User.search(this.query.name);
+    this.status = 200;
+    this.body = users;
+  },
+
   delete: function* () {
     if (yield User.delete(_user_id(this))){
       this.status = 200;
     }
-    // else {
-    //   this.status = 404;
-    // }
   }
 }
