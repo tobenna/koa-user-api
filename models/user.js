@@ -50,7 +50,6 @@ module.exports = {
       return true;
     }
     else {
-      yield fs.writeFile(userFile, JSON.stringify(data));
       return false;
     }
   },
@@ -70,18 +69,21 @@ module.exports = {
     if (user.errors.length > 0) return false;
     var data = yield this.all();
     var userToSave = {};
-    var lastUser = data[data.length -1 ];
     for (var prop in userSchema) {
       userToSave[prop] = user[prop];
     }
-    if (typeof lastUser === 'undefined'){
-      userToSave.id = 1;
-    }else{
-      userToSave.id = lastUser.id + 1;
-    }
-    data.push(userToSave);
-    yield fs.writeFile(userFile, JSON.stringify([]));
+    data.push(yield this._setId(userToSave, data));
     yield fs.writeFile(userFile, JSON.stringify(data));
     return userToSave;
+  },
+  _setId: function* (userToSave, data) {
+    var lastUser = data[data.length -1 ];
+    if (typeof lastUser === 'undefined'){
+      userToSave.id = 1;
+    }
+    else {
+      userToSave.id = lastUser.id + 1;
+    }
+    return userToSave
   }
 }

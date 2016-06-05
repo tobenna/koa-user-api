@@ -109,9 +109,17 @@ describe('API', function () {
       .expect(404).end();
     });
 
-    it('does not delete if doesnt find user', function* () {
+    it('does not delete if not an ID', function* () {
       var res = yield request.delete('/users/' + 'notAnID')
       .expect(404).end();
+    });
+
+    it('does not delete if doesnt find user', function* () {
+      var allUsers = yield request.get('/users/').expect(200).end();
+      var res = yield request.delete('/users/' + 5)
+      .expect(404).end();
+      var newUsers = yield request.get('/users/').expect(200).end();
+      allUsers.body.length.should.equal(newUsers.body.length)
     });
   });
 

@@ -15,11 +15,20 @@ User.prototype._fill = function (info) {
       this._validate(prop, info[prop]);
     }
     else {
-      this.errors.push('Invalid parameters')
+      this.errors.push(this.MESSAGES.invalidParams());
     }
   }
   return this;
 };
+
+User.prototype.MESSAGES = {
+    invalidParams: function () {
+      return 'Invalid parameters';
+    },
+    validationError: function (property) {
+      return 'Validation error on ' + property + ' property';
+    }
+}
 
 User.prototype._validations = {
     id: function (id) {
@@ -36,8 +45,7 @@ User.prototype._validations = {
 
 User.prototype._validate = function (prop, value) {
   if (this._validations[prop](value)) return;
-  this.errors.push('Validation error on ' + prop + ' property');
-  this[prop] = null;
+  this.errors.push(this.MESSAGES.validationError(prop));
 }
 
 module.exports = function (info) {

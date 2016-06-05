@@ -25,12 +25,24 @@ describe('users.create()', function () {
     newUsers.length.should.match(users.length + 1);
   });
 
-  it('Does not save with invalid parameters',function* () {
-    var users = yield User.all();
-    var badParamsUser = yield User.new({ badParams: 'Bad param' });
-    var badUser = yield User.save(badParamsUser);
-    var newUsers = yield User.all();
-    newUsers.length.should.match(users.length);
+  describe('With invalid parameters', function () {
+    var users;
+
+    it('Does not save',function* () {
+      users = yield User.all();
+      var badParamsUser = yield User.new({ badParams: 'Bad param' });
+      var badUser = yield User.save(badParamsUser);
+      badUser.should.be.false();
+      var newUsers = yield User.all();
+      newUsers.length.should.match(users.length);
+    });
+
+    it('Reports invalid parameters',function* () {
+      var badParamsUser = yield User.new({ badParams: 'Bad param' });
+      badParamsUser.errors[0].should.match('Invalid parameters');
+    });
+
+
   });
 
   it('Does not create with invalid email',function* () {
