@@ -59,7 +59,7 @@ module.exports = {
     for (var prop in userSchema) {
       userToSave[prop] = user[prop];
     }
-    data.push(yield this._setId(userToSave, data));
+    data.push(this._setId(userToSave, data));
     yield fs.writeFile(userFile, JSON.stringify(data));
     return userToSave;
   },
@@ -70,7 +70,7 @@ module.exports = {
       return self.new(user).isLike(term);
     });
   },
-  _setId: function* (userToSave, data) {
+  _setId: function (userToSave, data) {
     var lastUser = data[data.length -1 ];
     if (typeof lastUser === 'undefined'){
       userToSave.id = 1;
@@ -78,6 +78,6 @@ module.exports = {
     else {
       userToSave.id = lastUser.id + 1;
     }
-    return userToSave
+    return userToSave;
   }
-}
+};

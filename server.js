@@ -1,5 +1,5 @@
 var koa = require('koa');
-var logger = require('koa-logger')
+var logger = require('koa-logger');
 var app = module.exports = koa();
 var routes = require('./routes');
 

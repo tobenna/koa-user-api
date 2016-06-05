@@ -11,7 +11,7 @@ describe('API', function () {
       email:    'test@email.com',
       forename: 'Tobenna',
       surname:  'Ndu'
-  }
+  };
 
   before(function* () {
     yield fs.writeFile(dataFile, '[]');
@@ -19,7 +19,7 @@ describe('API', function () {
   });
 
   after(function* () {
-    yield fs.writeFile(dataFile, '[]')
+    yield fs.writeFile(dataFile, '[]');
   });
 
 
@@ -119,7 +119,7 @@ describe('API', function () {
       var res = yield request.delete('/users/' + 5)
       .expect(404).end();
       var newUsers = yield request.get('/users/').expect(200).end();
-      allUsers.body.length.should.equal(newUsers.body.length)
+      allUsers.body.length.should.equal(newUsers.body.length);
     });
   });
 
@@ -142,7 +142,7 @@ describe('API', function () {
       var res = yield request.delete('/users/' + 5)
       .expect(404).end();
       var newUsers = yield request.get('/users/').expect(200).end();
-      allUsers.body.length.should.equal(newUsers.body.length)
+      allUsers.body.length.should.equal(newUsers.body.length);
     });
   });
 

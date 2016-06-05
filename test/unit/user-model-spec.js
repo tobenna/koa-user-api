@@ -2,7 +2,7 @@ require('co-mocha');
 var should = require('should');
 var fs = require('co-fs');
 var User = require('../../models/user.js');
-var testUser = {}
+var testUser = {};
 var date = new Date();
 var userParams = {
     id:        1,
@@ -10,7 +10,7 @@ var userParams = {
     forename: 'Tobenna',
     surname:  'Ndu',
     created: date.toString()
-}
+};
 
 beforeEach(function* () {
   yield fs.writeFile('./data/users.json', '[]');
@@ -37,7 +37,7 @@ describe('users.create()', function () {
       newUsers.length.should.match(users.length);
     });
 
-    it('Reports invalid parameters',function* () {
+    it('Reports invalid parameters',function () {
       var badParamsUser = User.new({ badParams: 'Bad param' });
       badParamsUser.errors[0].should.match('Invalid parameters');
     });
@@ -95,7 +95,7 @@ describe('users.delete(:id)', function () {
 
 describe('users.update(:id, :params)', function () {
   it('updates the user with a certian id',function* () {
-    var params = { email: 'test2@email.com' }
+    var params = { email: 'test2@email.com' };
     yield User.update(1, params);
     var updatedUser = yield User.findOne(1);
     updatedUser.email.should.equal(params.email);
@@ -122,5 +122,5 @@ describe('users.search(:term)', function () {
 
 
 afterEach(function *() {
-  yield fs.writeFile('./data/users.json', '[]')
+  yield fs.writeFile('./data/users.json', '[]');
 });

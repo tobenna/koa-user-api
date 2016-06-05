@@ -4,4 +4,4 @@ module.exports = {
   forename: null,
   surname:  null,
   created:  null
-}
+};

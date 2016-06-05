@@ -6,7 +6,7 @@ var User = function () {
     this.created = null;
     this.errors = [];
 
-}
+};
 
 User.prototype._fill = function (info) {
   for (var prop in info) {
@@ -23,9 +23,9 @@ User.prototype._fill = function (info) {
 
 
 User.prototype.isLike = function (term) {
-  _matches = function (name, term) {
+  var _matches = function (name, term) {
     return (name.toLowerCase().search(term.toLowerCase())) > - 1;
-  }
+  };
   return _matches(this.forename, term) || _matches(this.surname, term);
 
 };
@@ -37,15 +37,15 @@ User.prototype.MESSAGES = {
     validationError: function (property) {
       return 'Validation error on ' + property + ' property';
     }
-}
+};
 
 User.prototype._validations = {
     id: function (id) {
        return Number.isInteger(id);
     },
-    forename: function () { return true },
-    surname: function () { return true },
-    created: function () { return true },
+    forename: function () { return true; },
+    surname: function () { return true; },
+    created: function () { return true; },
     email: function (email) {
       var re = /\S+@\S+\.\S+/;
       return re.test(email);
@@ -55,7 +55,7 @@ User.prototype._validations = {
 User.prototype._validate = function (prop, value) {
   if (this._validations[prop](value)) return;
   this.errors.push(this.MESSAGES.validationError(prop));
-}
+};
 
 module.exports = function (info) {
   var user = new User();
