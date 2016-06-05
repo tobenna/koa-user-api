@@ -3,8 +3,9 @@ var logger = require('koa-logger')
 var app = module.exports = koa();
 var routes = require('./routes');
 
+var PORT_NUMBER = 3000;
 app.use(logger());
 app.use(routes);
-app.listen(3000);
+app.listen(PORT_NUMBER);
 
-console.log("Listening on port 3000");
+console.log("Listening on port " + PORT_NUMBER);
