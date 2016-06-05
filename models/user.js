@@ -23,42 +23,29 @@ module.exports = {
     });
     return user;
   },
-  new: function* (params) {
+  new: function (params) {
     return new User(params);
   },
   create: function* (params) {
     var data = yield this.all();
-    var newUser = yield this.new(params);
+    var newUser = this.new(params);
     var savedUser = yield this.save(newUser);
-    if (savedUser) {
-      data.push(savedUser);
-      yield fs.writeFile(userFile, JSON.stringify(data));
-      return savedUser;
-    }
-    else {
-      return newUser;
-    }
+    if (savedUser) return savedUser;
+    return newUser;
   },
   delete: function* (_id) {
     var data = yield this.all();
-    var index = data.findIndex(function (user) {
-      return user.id === _id;
-    });
-    if (index > -1) {
-      data.splice(index, 1);
-      yield fs.writeFile(userFile, JSON.stringify(data));
-      return true;
-    }
-    else {
-      return false;
-    }
+    var userToDelete = yield this.findOne(_id);
+    if (typeof userToDelete === 'undefined') return false;
+    data.splice(userToDelete.index);
+    yield fs.writeFile(userFile, JSON.stringify(data));
+    return true;
   },
   update: function* (userId, _params) {
-    var userToUpdate = {}
     var data = yield this._all();
-    var validatedParams = yield this.new(_params);
+    var validatedParams = this.new(_params);
     if (validatedParams.errors.length > 0) return false;
-    userToUpdate = yield this.findOne(userId);
+    var userToUpdate = yield this.findOne(userId);
     for (var prop in _params) {
       userToUpdate[prop] = _params[prop];
     }
