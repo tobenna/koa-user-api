@@ -34,19 +34,15 @@ class App extends React.Component {
 
   deleteUser(reference) {
     var buttonId = parseInt(reference.target.id);
-    this.setState({
-      users: this.state.users
-        .filter(user => {
-          console.log(buttonId);
-          return user.id !== buttonId
-        })
-    });
+    axios.delete(`${API_URL}/${buttonId}`)
+      .then(() => this.setState({
+          users: this.state.users
+            .filter(user => {
+                return user.id !== buttonId
+              })
+            })
+          );
   }
-  // setRequestMessage(message) {
-  //   this.setState({
-  //     messsage: ''
-  //   });
-  // }
 
   render () {
     const functions = {
