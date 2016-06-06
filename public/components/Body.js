@@ -9,7 +9,7 @@ const Body = React.createClass({
     });
     users.each
     return (
-      <div>
+      <div className="user-list">
         {users}
       </div>
     )

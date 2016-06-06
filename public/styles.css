@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:300,900');
+
+body {
+  font-family: Lato, Helvetica, Arial, sans-serif;
+  margin: 0 auto;
+  max-width: 800px;
+  background-color: #fafafa;
+}
+
+.user-list {
+  text-align: center;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.user .name {
+  font-weight: bold;
+  color: #40bfbf;
+  float: left;
+  margin: 15px;
+}
+
+.user .email {
+  font-weight: bold;
+  color: #4496db;
+  float: right;
+  margin: 15px;
+}
+
+.user {
+  background: white;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  margin: 1.5em;
+  padding: 0.75em;
+}
+
+.user:hover {
+  transform: scale(1.05)
+}
+
+.user-info {
+  width: 100%;
+  height: 50px;
+}
+.delete-button{
+  width: 100%;
+  height: 40px;
+  border: none;
+  background-color: white;
+  color: #bf4060;;
+  font-family: Lato, Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  font-size: 1em;
+  cursor: pointer;
+}

@@ -8,21 +8,19 @@ const User = React.createClass({
     const functions = this.props.functions
     return (
       <div className="user">
-        <div>
-          {user.forename} {user.surname}
+        <div className="user-info">
+          <div className="name">
+            {user.forename} {user.surname}
+          </div>
+          <div className="email">
+            {user.email}
+          </div>
         </div>
         <div>
-          {user.email}
+          <a className="delete-button" onClick={functions.deleteUser} id={user.id}>
+            Delete
+          </a>
         </div>
-        <div>
-          {user.id}
-        </div>
-        <div>
-          {user.created}
-        </div>
-        <button className="button" onClick={functions.deleteUser} id={user.id}>
-          Delete
-        </button>
       </div>
     );
   }
