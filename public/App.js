@@ -6,42 +6,55 @@ const API_URL = 'http://localhost:3001/users/'
 class App extends React.Component {
   constructor() {
     super();
+    var self = this;
     this.state = {
-      users: []
+      users: [],
+      responseInfo: {
+        url: '',
+        status: '',
+        statusText: ''
+      }
      };
   }
   getUsers() {
-    console.log("tobenna Mounted");
     axios.get(API_URL)
-      .then((response) => this.setState({
-        users: response.data
-      }));
+      .then((response) => {
+      this.setState({
+        users: response.data,
+        responseInfo: {
+          url:'GET /api/v1/users/',
+          status: response.status,
+          statusText: response.statusText
+        }
+      })});
   }
   componentDidMount () {
     this.getUsers();
   }
 
-  deleteUser(id) {
+  deleteUser(reference) {
+    var buttonId = parseInt(reference.target.id);
     this.setState({
       users: this.state.users
-        .filter(user => user.id !== id)
+        .filter(user => {
+          console.log(buttonId);
+          return user.id !== buttonId
+        })
     });
   }
-
-  setRequestMessage(message) {
-    this.setState({
-      messsage: ''
-    });
-  }
+  // setRequestMessage(message) {
+  //   this.setState({
+  //     messsage: ''
+  //   });
+  // }
 
   render () {
     const functions = {
-      deleteUser: this.deleteUser,
-      setRequestMessage: this.setRequestMessage
+      deleteUser: this.deleteUser.bind(this)
     }
     return (
       <div>
-        <Layout users={this.state.users} functions={functions}  />
+        <Layout users={this.state.users} functions={functions}  responseInfo={this.state.responseInfo}/>
       </div>
     )
   }

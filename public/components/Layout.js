@@ -6,11 +6,10 @@ import Body from './Body';
 
 const Layout = React.createClass({
   render () {
-    console.log(this.props);
     return (
       <div>
         <Header />
-        <RequestInfo />
+        <RequestInfo responseInfo={this.props.responseInfo}/>
         <Body users={this.props.users} functions={this.props.functions}/>
       </div>
     )

@@ -3,11 +3,10 @@ import User from './User'
 
 const Body = React.createClass({
   render () {
-    console.log(this.props.users);
+    var functions = this.props.functions;
     var users = this.props.users.map(function (user) {
-      return (<User user={user} key={user.id}/>);
+      return (<User user={user} key={user.id} functions={functions}/>);
     });
-    console.log(users);
     users.each
     return (
       <div>
