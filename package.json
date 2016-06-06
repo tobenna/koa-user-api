@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "istanbul cover _mocha -- -R spec"
+    "test": "istanbul cover _mocha -- -R spec",
+    "seed": "node seed"
   },
   "keywords": [],
   "author": "",
@@ -12,11 +13,8 @@
   "devDependencies": {
     "co-mocha": "^1.1.2",
     "co-supertest": "0.0.10",
-    "enzyme": "^2.3.0",
-    "expect": "^1.20.1",
     "istanbul": "^0.4.3",
     "mocha": "^2.5.3",
-    "react-addons-test-utils": "^15.1.0",
     "should": "^9.0.0",
     "supertest": "^1.2.0"
   },

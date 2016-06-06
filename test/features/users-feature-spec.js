@@ -79,12 +79,12 @@ describe('API', function () {
     });
   });
 
-  describe('PUT /users/:id ', function(){
+  describe('PATCH /users/:id ', function(){
 
     it('it returns no content to show success', function* () {
       var updateParams = { email: "tes2t@email.com" };
       userParams.email = 'test@email.com';
-      var res = yield request.put(API_URL + 1).send(updateParams)
+      var res = yield request.patch(API_URL + 1).send(updateParams)
       .expect(204).end();
       var userGotten = yield request.get(API_URL+1).expect(200).end();
       userGotten.body.email.should.equal(updateParams.email);
@@ -92,7 +92,7 @@ describe('API', function () {
 
     it('it does not update when bad params', function* () {
       var updateParams = { badParam: "tes2t@email.com" };
-      var res = yield request.put(API_URL + 1).send(updateParams)
+      var res = yield request.patch(API_URL + 1).send(updateParams)
       .expect(422).end();
       var userGotten = yield request.get(API_URL+ 1 ).expect(200).end();
       userGotten.body.email.should.equal(userParams.email);
