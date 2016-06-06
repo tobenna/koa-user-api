@@ -28,10 +28,14 @@ Use `http://localhost:3000/api/v1` as base URL
 
 * List users GET `/users/`
 * Single user GET `/users/:id`
-* Create user POST `/users/` with required parameters **email**, **forename**, **surname** passed as a JSON object
+* Create user POST `/users/` with parameters **email**, **forename**, **surname** passed as a JSON object
 * Update user PATCH `/users/:id` with the parameters you want to change
 * Delete user DELETE `/users/:id`
 * Search users GET `/users/search?q=:term`
 
 A user's id is `:id`
 Search term is  `:term`
+
+## Validations
+
+* Minimal validation was added on the **email** and **id** fields
