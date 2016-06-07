@@ -137,14 +137,7 @@ describe('API', function () {
       .expect(200).end();
       usersGotten.body.length.should.equal(0);
     });
-
-    it('does not delete if doesnt find user', function* () {
-      var allUsers = yield request.get(API_URL).expect(200).end();
-      var res = yield request.delete(API_URL + 5)
-      .expect(404).end();
-      var newUsers = yield request.get(API_URL).expect(200).end();
-      allUsers.body.length.should.equal(newUsers.body.length);
-    });
+    
   });
 
 });
