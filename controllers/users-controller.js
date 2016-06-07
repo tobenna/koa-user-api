@@ -9,7 +9,7 @@ module.exports = {
     var id = _user_id(this);
     var user = yield User.findOne(id);
     if (typeof user === 'undefined') {
-      this.code = '404';
+      this.code = 404;
     }else{
       this.body = user;
     }
