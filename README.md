@@ -31,7 +31,7 @@ Use `http://localhost:3000/api/v1` as base URL
 * Create user POST `/users/` with parameters **email**, **forename**, **surname** passed as a JSON object
 * Update user PATCH `/users/:id` with the parameters you want to change
 * Delete user DELETE `/users/:id`
-* Search users GET `/users/search?q=:term`
+* Search users GET `/users/search?q=:term` it searches for you term in the **forename** and **surname** fields
 
 A user's id is `:id`
 Search term is  `:term`
