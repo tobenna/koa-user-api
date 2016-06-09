@@ -12,7 +12,7 @@ This is a simple API built with Node.js for my Holiday Extras Tech Test
 The Api was tested using
 * [Should](https://shouldjs.github.io/) and [Mocha](https://mochajs.org/).
 * For the end to end testing [Supertest](https://github.com/visionmedia/supertest) was used.
-* Test Coverage was generated [Istanbul](http://gotwarlost.github.io/istanbul/)
+* Test Coverage was generated using [Istanbul](http://gotwarlost.github.io/istanbul/)
 
 To run the tests
 * run `mocha` for tests without coverage
