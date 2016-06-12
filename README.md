@@ -1,6 +1,6 @@
 ## User API
 
-This is a simple API built with Node.js for my Holiday Extras Tech Test
+This is a simple API built with Node.js
 
 ## To Install
 
