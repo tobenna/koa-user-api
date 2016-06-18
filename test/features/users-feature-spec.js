@@ -105,7 +105,7 @@ describe('API', function () {
 
     it('returns success after deleting', function* () {
       var res = yield request.delete(API_URL + 1)
-      .expect(200).end();
+      .expect(204).end();
       var userGotten = yield request.get(API_URL+ 1)
       .expect(404).end();
     });
@@ -137,7 +137,7 @@ describe('API', function () {
       .expect(200).end();
       usersGotten.body.length.should.equal(0);
     });
-    
+
   });
 
 });
