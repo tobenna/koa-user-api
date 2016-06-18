@@ -1,6 +1,6 @@
 ## User API
 
-This is a simple API built with Node.js for my Holiday Extras Tech Test
+This is a simple API built with Node.js
 
 ## To Install
 
@@ -10,9 +10,9 @@ This is a simple API built with Node.js for my Holiday Extras Tech Test
 
 ## Testing
 The Api was tested using
-* Should and Mocha.
-* For the end to end testing Supertest was used.
-* Test Coverage was generated Istanbul
+* [Should](https://shouldjs.github.io/) and [Mocha](https://mochajs.org/).
+* For the end to end testing [Supertest](https://github.com/visionmedia/supertest) was used.
+* Test Coverage was generated using [Istanbul](http://gotwarlost.github.io/istanbul/)
 
 To run the tests
 * run `mocha` for tests without coverage
@@ -31,7 +31,7 @@ Use `http://localhost:3000/api/v1` as base URL
 * Create user POST `/users/` with parameters **email**, **forename**, **surname** passed as a JSON object
 * Update user PATCH `/users/:id` with the parameters you want to change
 * Delete user DELETE `/users/:id`
-* Search users GET `/users/search?q=:term`
+* Search users GET `/users/search?q=:term` it searches for the term in the **forename** and **surname** fields
 
 A user's id is `:id`
 Search term is  `:term`
