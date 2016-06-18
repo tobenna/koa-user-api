@@ -50,7 +50,7 @@ module.exports = {
 
   delete: function* () {
     if (yield User.delete(_user_id(this))){
-      this.status = 200;
+      this.status = 204;
     }
   }
 };
