@@ -10,7 +10,8 @@ module.exports = {
     var user = yield User.findOne(id);
     if (typeof user === 'undefined') {
       this.code = 404;
-    }else{
+    }
+    else {
       this.body = user;
     }
   },
