@@ -2,7 +2,8 @@ import React from 'react'
 import axios from 'axios'
 import _ from 'lodash'
 import Layout from './components/Layout'
-const API_URL = 'http://localhost:3001/users/'
+const API_URL = '/api/v1/users/'
+
 class App extends React.Component {
   constructor() {
     super();
@@ -41,7 +42,7 @@ class App extends React.Component {
                 return user.id !== userId
               }),
           responseInfo:{
-            url:`DELETE /api/v1/users/${userId}`,
+            url:`DELETE ${API_URL}${userId}`,
             status: response.status,
             statusText: response.statusText
             }
