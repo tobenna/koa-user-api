@@ -8,7 +8,7 @@ router.get(API_URL + '/users/', controller.index);
 
 router.post(API_URL + '/users/', controller.create);
 
-router.put(API_URL + '/users/:id', controller.update);
+router.patch(API_URL + '/users/:id', controller.update);
 
 router.get(API_URL + '/users/search', controller.search);
 

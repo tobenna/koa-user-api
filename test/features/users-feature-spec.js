@@ -84,7 +84,7 @@ describe('API', function () {
     it('it returns no content to show success', function* () {
       var updateParams = { email: "tes2t@email.com" };
       userParams.email = 'test@email.com';
-      var res = yield request.put(API_URL + 1).send(updateParams)
+      var res = yield request.patch(API_URL + 1).send(updateParams)
       .expect(204).end();
       var userGotten = yield request.get(API_URL+1).expect(200).end();
       userGotten.body.email.should.equal(updateParams.email);
@@ -92,7 +92,7 @@ describe('API', function () {
 
     it('it does not update when bad params', function* () {
       var updateParams = { badParam: "tes2t@email.com" };
-      var res = yield request.put(API_URL + 1).send(updateParams)
+      var res = yield request.patch(API_URL + 1).send(updateParams)
       .expect(422).end();
       var userGotten = yield request.get(API_URL+ 1 ).expect(200).end();
       userGotten.body.email.should.equal(userParams.email);
@@ -105,7 +105,7 @@ describe('API', function () {
 
     it('returns success after deleting', function* () {
       var res = yield request.delete(API_URL + 1)
-      .expect(200).end();
+      .expect(204).end();
       var userGotten = yield request.get(API_URL+ 1)
       .expect(404).end();
     });
@@ -115,13 +115,6 @@ describe('API', function () {
       .expect(404).end();
     });
 
-    it('does not delete if doesnt find user', function* () {
-      var allUsers = yield request.get(API_URL).expect(200).end();
-      var res = yield request.delete(API_URL + 5)
-      .expect(404).end();
-      var newUsers = yield request.get(API_URL).expect(200).end();
-      allUsers.body.length.should.equal(newUsers.body.length);
-    });
   });
 
   describe('GET /users/search?q=:term ', function(){

@@ -10,7 +10,8 @@ module.exports = {
     var user = yield User.findOne(id);
     if (typeof user === 'undefined') {
       this.code = '404';
-    }else{
+    }
+    else {
       this.body = user;
     }
   },
@@ -50,7 +51,7 @@ module.exports = {
 
   delete: function* () {
     if (yield User.delete(_user_id(this))){
-      this.status = 200;
+      this.status = 204;
     }
   }
 };
