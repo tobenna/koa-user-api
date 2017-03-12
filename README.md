@@ -9,10 +9,10 @@ This is a simple API built with Node.js
 
 
 ## Testing
-The Api was tested using
+I tested Api using
 * [Should](https://shouldjs.github.io/) and [Mocha](https://mochajs.org/).
-* For the end to end testing [Supertest](https://github.com/visionmedia/supertest) was used.
-* Test Coverage was generated using [Istanbul](http://gotwarlost.github.io/istanbul/)
+* For the end to end testing I used [Supertest](https://github.com/visionmedia/supertest).
+* Test Coverage using [Istanbul](http://gotwarlost.github.io/istanbul/)
 
 To run the tests
 * run `mocha` for tests without coverage
@@ -23,7 +23,7 @@ To run the tests
 
 * Run `npm start`
 
-The API routes can be used with Postman:
+The API routes can with Postman:
 Use `http://localhost:3000/api/v1` as base URL
 
 * List users GET `/users/`
@@ -38,4 +38,4 @@ Search term is  `:term`
 
 ## Validations
 
-* Minimal validation was added on the **email** and **id** fields
+* Minimal validation on the **email** and **id** fields
